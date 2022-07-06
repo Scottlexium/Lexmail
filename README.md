@@ -19,7 +19,7 @@
     "requirementText":"This is simple a text saying what they need"
 }
 ```
-[]: # Environment variables
-[]: ## USER: user@gmail.com
-[]: ## PASSWORD: 12345678
-[]: ## SERVICE: Gmail
+# Environment variables
+## USER: user@gmail.com
+## PASSWORD: 12345678
+## SERVICE: Gmail
