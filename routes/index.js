@@ -4,13 +4,18 @@ var router = express.Router();
 const MailGen = require('mailgen');
 const json = require('../users.json');
 const nodemailer = require("nodemailer");
+const dotenv = require('dotenv');
+dotenv.config();
+const SERVICE = process.env.SERVICE||'gmail';
+const USER = process.env.USER||'user@gmail.com';
+const PASSWORD = process.env.PASSWORD||'12345678';
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/send', function (req, res) {
-  const {from, subject, Emails,name,logoLink,EventDescription,snippet, title, logoIMG, calendar, download, join, date, time, location, requirement, requirementText } = req.body;
+router.post('/send', async function (req, res) {
+  const { from, subject, Emails, name, logoLink, EventDescription, snippet, title, logoIMG, calendar, download, join, date, time, location, requirement, requirementText } = req.body;
   // const Emails = [];
   // get the email and name from json
   // json.forEach((user) => {
@@ -30,7 +35,7 @@ router.post('/send', function (req, res) {
       title: title,
       action: [{
         instructions: snippet
-      },{
+      }, {
         instructions: EventDescription,
       }],
       table: {
@@ -88,13 +93,12 @@ router.post('/send', function (req, res) {
   }
   const emailTemplate = mailGenerator.generate(email)
   require('fs').writeFileSync('preview.html', emailTemplate, 'utf8');
-  // res.send(emailTemplate);
-  // })
+
   const transporter = nodemailer.createTransport({
-    service: process.env.SERVICE,
+    service: SERVICE,
     auth: {
-      user: process.env.USER,
-      pass: process.env.PASSWORD // naturally, replace both with your real credentials or an application-specific password
+      user: USER,
+      pass: PASSWORD 
     }
   });
 
@@ -105,13 +109,22 @@ router.post('/send', function (req, res) {
     html: emailTemplate
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      res.send('Email sent to : ' + Emails)
-      console.log('Email sent to : ' + Emails);
-    }
-  });
+  try {
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        return res.status(400).json({
+          message: 'An error occured: ', error
+        })
+      } else {
+        return res.status(200).json({
+          message: 'Email sent: ' + Emails
+        })
+      }
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: 'An error occured: ', error
+    })
+  }
 })
 module.exports = router;
