@@ -1,5 +1,5 @@
 ## The Request body
-### send a POST request to /send
+### send a POST request to https://lexmail-api.azurewebsites.net/send
 ### with a JSON body
 ```json
 
