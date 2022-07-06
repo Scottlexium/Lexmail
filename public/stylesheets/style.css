@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+.status{
+  color:green;
+  margin-left: 10px;
+}
+.status-block{
+  display: flex;
+  gap: 20px;
+}

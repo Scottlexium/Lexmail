@@ -6,16 +6,16 @@ const json = require('../users.json');
 const nodemailer = require("nodemailer");
 const dotenv = require('dotenv');
 dotenv.config();
-const SERVICE = process.env.SERVICE||'gmail';
-const USER = process.env.USER||'user@gmail.com';
-const PASSWORD = process.env.PASSWORD||'12345678';
+const SERVICE = process.env.SERVICE;
+const USER = process.env.USER;
+const PASSWORD = process.env.PASSWORD;
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Lexmail' });
 });
 
 router.post('/send', async function (req, res) {
-  const { from, subject, Emails, name, logoLink, EventDescription, snippet, title, logoIMG, calendar, download, join, date, time, location, requirement, requirementText } = req.body;
+  const { from, subject, Emails, name, logoLink, EventDescription, snippet, title, logoIMG, calendar, download, join, date, time, location, requirement, requirementText, btnColor } = req.body;
   // const Emails = [];
   // get the email and name from json
   // json.forEach((user) => {
@@ -68,14 +68,14 @@ router.post('/send', async function (req, res) {
       action: [
         {
           button: {
-            color: '#0089e1', // Optional action button color
+            color: btnColor, // Optional action button color
             text: 'Add to Calendar!',
             link: calendar
           },
         },
         {
           button: {
-            color: '#0089e1', // Optional action button color
+            color: btnColor, // Optional action button color
             text: 'Event Link!',
             link: join
           }
@@ -83,7 +83,7 @@ router.post('/send', async function (req, res) {
         {
           instructions: requirement,
           button: {
-            color: '#0089e1', // Optional action button color
+            color: btnColor, // Optional action button color
             text: requirementText,
             link: download
           }

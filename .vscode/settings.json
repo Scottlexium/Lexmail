@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/dc8fda8e-13fd-4de0-af0d-1f90810c72b5/microsoft.web/sites/subscriptions/dc8fda8e-13fd-4de0-af0d-1f90810c72b5/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/lexmail-api",
+    "appService.deploySubpath": "."
+}
