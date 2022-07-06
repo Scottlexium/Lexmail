@@ -1,3 +1,4 @@
+## The Request body
 ```json
 {
     "Emails":["test@gmail.com", "user2@gmail.com"],
